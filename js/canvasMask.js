@@ -41,8 +41,8 @@ THE SOFTWARE.
 	@param {object} [mask] The <img> containing the PNG-24 mask image
 	@param {int} [offsetX] The translation of the mask (X value)
 	@param {int} [offsetY] The translation of the mask (Y value)
-	@param {int} [width] The width of the image (should be the same as the mask)
-	@param {int} [height] The height of the image (should be the same as the mask)
+	@param {int} [width] The width of the image
+	@param {int} [height] The height of the image
 	@param {boolean} [asBase64] Option to return the image as Base64
 */
 function applyCanvasMask(image, mask, offsetX, offsetY, width, height, asBase64) {
