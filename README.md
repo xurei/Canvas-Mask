@@ -57,6 +57,10 @@ Changelog
 
 * Initial release.
 
+0.2 (03/05/2012):
+
+* Added mask translation. The mask doesn't need to have the same size as the image anymore. [xurei]
+
 
 Credits
 -----------------
