@@ -1,12 +1,15 @@
 /*
-Canvas Mask Utility v0.1
+Canvas Mask Utility v0.2
 Use HTML5 Canvas to apply an alpha mask to an image element.
+
+This code is base on the work of Ben Barnett : 
+https://github.com/benbarnett/Canvas-Mask
 ---
-http://github.com/benbarnett/canvas-mask
-http://benbarnett.net
-@benpbarnett
+https://github.com/xurei/Canvas-Mask
+http://www.xurei-design.be
+@xurei
 ---
-Copyright (c) 2011 Ben Barnett
+Copyright (c) 2012 Olivier Bourdoux
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +32,6 @@ THE SOFTWARE.
 
 */
 
-
-
 /**
 	@private
 	@name applyCanvasMask
@@ -38,11 +39,13 @@ THE SOFTWARE.
 	@description Use Canvas to apply an Alpha Mask to an <img>. Preload images first.
 	@param {object} [image] The <img> to apply the mask
 	@param {object} [mask] The <img> containing the PNG-24 mask image
+	@param {int} [offsetX] The translation of the mask (X value)
+	@param {int} [offsetY] The translation of the mask (Y value)
 	@param {int} [width] The width of the image (should be the same as the mask)
 	@param {int} [height] The height of the image (should be the same as the mask)
 	@param {boolean} [asBase64] Option to return the image as Base64
 */
-function applyCanvasMask(image, mask, width, height, asBase64) {
+function applyCanvasMask(image, mask, offsetX, offsetY, width, height, asBase64) {
 	// check we have Canvas, and return the unmasked image if not
 	if (!document.createElement('canvas').getContext) return image;
 	
@@ -76,10 +79,32 @@ function applyCanvasMask(image, mask, width, height, asBase64) {
 	// store mask data
 	alphaData = buffer.getImageData(0, height, width, height).data;
 	
-	// loop through alpha mask and apply alpha values to base image
-	for (var i = 3, len = imageData.length; i < len; i = i + 4) {
-		imageData[i] = alphaData[i];
+	var offset = y*width + x
+	
+	len = imageData.length;
+		
+	//loop through alpha mask and make it null (the real values will be set after)
+	for (var i = 3; i < len; i += 4) {
+		imageData[i] = 0;
 	}
+	
+	var maskW = mask.width;
+	var maskH = mask.height;
+	// loop through alpha mask and apply alpha values to base image
+		for (var y=0; y < maskH; ++y) 
+		{
+			for (var x=0; x < maskW; ++x)
+			{
+				if (x+offsetX >= width)
+					break;
+				if (x+offsetX >= 0)
+				{
+					var i = ( (y+offsetY)*width + (x+offsetX)  )*4 + 3
+					var j = ( (y)        *width + (x)          )*4 + 3
+					imageData[i] = alphaData[j];
+				}
+			}
+		}
 
 	// return the pixel data with alpha values applied
 	if (asBase64) {
