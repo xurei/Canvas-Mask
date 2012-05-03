@@ -3,12 +3,17 @@ Canvas Mask Utility
 
 Use HTML5 Canvas to apply an alpha mask to an image element.
 Compatible with any browser supporting Canvas.
+This version is a fork of its original version from benbarnett. It can be found here :
+https://github.com/benbarnett/Canvas-Mask
+
+This extended version adds positioning of the mask on the image.
 
 Tested with Chrome 11 and Firefox 3.6+
 
 Demo
 -----------------
 Simple animation demo can be found here: http://playground.benbarnett.net/canvas-mask/
+Note that this demo is based on the original version and not this one.
 
 
 What it does
@@ -32,13 +37,15 @@ Simply pass in two image elements (pre-loaded, as shown on demo), the width and 
 By default the function will return Canvas pixel data which you can then use to draw on to a Canvas. For example:
 
 output.putImageData(
-	applyCanvasMask(<BASE IMAGE>, <MASK IMAGE>, width, height), 0, 0, 0, 0, width, height
+	applyCanvasMask(BASE IMAGE, MASK IMAGE, x,y, width, height), 0, 0, 0, 0, width, height
 );
 
-Alternatively, you can specify a 5th parameter to have the function return the masked image as a Base64 encoded data URL. This is useful for applying to background images. For example:
+The x and y arguments are the translation of the mask on the image.
+
+Alternatively, you can specify a 7th parameter to have the function return the masked image as a Base64 encoded data URL. This is useful for applying to background images. For example:
 
 $('body').css({
-	'background-image': 'url(' + applyCanvasMask(<BASE IMAGE>, <MASK IMAGE>, width, height, true) + ')'
+	'background-image': 'url(' + applyCanvasMask(BASE IMAGE, MASK IMAGE, x,y, width, height, true) + ')'
 });
 
 
@@ -53,5 +60,6 @@ Changelog
 Credits
 -----------------
 
-* Author: Ben Barnett - http://www.benbarnett.net - @benpbarnett
+* Author : Olivier Bourdoux - http://www.xurei-design.be - @xurei
+* Author of the original version: Ben Barnett - http://www.benbarnett.net - @benpbarnett
 * Jake Archibald for originally demonstrating this type of pixel manipulation - http://jakearchibald.com/scratch/alphavid/ - @jaffathecake
