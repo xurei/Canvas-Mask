@@ -13,6 +13,7 @@ Tested with Chrome 11 and Firefox 3.6+
 Demo
 -----------------
 Simple animation demo can be found here: http://playground.benbarnett.net/canvas-mask/
+
 Note that this demo is based on the original version and not this one.
 
 
